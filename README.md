@@ -1,6 +1,7 @@
 # Backend-Server For AI-Driven Illegal Logging and Poaching Detection System
 
 ## Project Structure
+```
 ├── app
 │   ├── api
 │   │   ├── __init__.py
@@ -21,8 +22,9 @@
 │       ├── device_service.py
 │       ├── __init__.py
 │       └── notification_service.py
-
+```
 ## Database Structure
+```
 /users
     /{user_id}
         /name
@@ -47,3 +49,4 @@
         /status (new, processing, resolved, false_positive)
         /resolved_by (optional)
         /notes (optional)
+```
