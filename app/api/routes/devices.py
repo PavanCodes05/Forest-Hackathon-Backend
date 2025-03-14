@@ -1,6 +1,6 @@
 from fastapi import APIRouter, status, HTTPException
 from app.schemas.device import Device
-from app.firebase_client import db
+from app.firebase_client import db, messaging
 from datetime import datetime
 
 router = APIRouter()
@@ -14,7 +14,19 @@ async def add_device(device: Device):
             device.installation_date = datetime.today().strftime("%Y-%m-%d")
         new_device_ref = device_collection.push(device.model_dump(exclude={"id"}))
         device.id = new_device_ref.key  # Firebase returns the generated key
+
+        message = messaging.Message(
+            notification=messaging.Notification(
+                title="New Device Added",
+                body="Notification Body Test"
+            ),
+            data={"type": "Gunshot", "confidence": "100%"},
+            topic="all"
+        )
+        messaging.send(message)
+
         return device
+    
     except Exception as e:
         raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error adding device: {str(e)}")
 
