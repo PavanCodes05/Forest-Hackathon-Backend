@@ -1,7 +1,9 @@
 from pydantic import BaseModel
+from typing import Optional
 from datetime import date
 
 class Device(BaseModel):
-    id: str
+    id: Optional[str] = None
+    name: str
     coordinates: str 
-    instalation_date: date
+    installation_date: Optional[str] = None
